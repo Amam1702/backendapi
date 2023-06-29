@@ -13,3 +13,4 @@ pillow==9.5.0
 drf-spectacular
 django-cors-headers==4.1.0
 djangorestframework-simplejwt
+pandas
