@@ -108,8 +108,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'do_api',
         'USER': 'doadmin',
-        'PASSWORD': 'AVNS_9JvZAbjvADwq9XpasbB',
-        'HOST': 'skipper-do-user-3716620-0.b.db.ondigitalocean.com',
+        'PASSWORD': 'AVNS_u8P3k9Ev9bButIH-ZEB',
+        'HOST': 'conex-do-user-14101236-0.b.db.ondigitalocean.com',
         'PORT': '25060',
     }
 }
