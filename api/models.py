@@ -23,10 +23,10 @@ class ClientMaster(models.Model):
     address             = models.CharField(max_length=400,blank=False,default='c_addr') 
     contact_name        = models.CharField(max_length=400,blank=False,default='c_name')
     contact_no          = models.CharField(max_length=400,blank=False,default='c_no')
-    active_vouchers     = models.IntegerField(default=0)
-    used_vouchers       = models.IntegerField(default=0)
+    active_vouchers     = models.IntegerField(default=0,null=True,blank=True)
+    used_vouchers       = models.IntegerField(default=0,null=True,blank=True)
     last_order_date     = models.DateField(default=None,blank=True,null=True)
-    last_order_amount   = models.IntegerField()
+    last_order_amount   = models.IntegerField(default=0)
 
     def __str__(self) -> str:
         return str(self.client_id)

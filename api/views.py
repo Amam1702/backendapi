@@ -84,7 +84,7 @@ def createClient(request):
                     serializer.save()
                     result.append({serializer.data['client_id']:'Created Client'})
                 else:
-                    result.append({serializer.data['client_id']:serializer.errors})
+                    result.append({row['client_name']:serializer.errors})
             except Exception as e:
                 result.append({serializer.data['client_id']:str(e)})
         return Response(result)
