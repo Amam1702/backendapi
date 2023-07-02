@@ -112,6 +112,43 @@ def createTransaction(request):
                 return Response(serializer.errors)
         except Exception as e:
              return Response({'status':str(e)})
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
+@authentication_classes([JWTAuthentication,TokenAuthentication])
+def createUser(request):
+        result = []
+        """Authenticate user and create agent"""
+        for row in request.data['data']:
+            try:
+                serializer = UserSerializer(data=row)
+                if serializer.is_valid():
+                    serializer.save()
+                    result.append({serializer.data['email']:'User Created'})
+                else:
+                    result.append({row['email']:serializer.errors})
+            except Exception as e:
+                result.append({serializer.data['email']:str(e)})
+        return Response(result)
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
+@authentication_classes([JWTAuthentication,TokenAuthentication])
+def createStation(request):
+        result = []
+        """Authenticate user and create agent"""
+        for row in request.data['data']:
+            try:
+                serializer = StationSerializer(data=row)
+                if serializer.is_valid():
+                    serializer.save()
+                    result.append({serializer.data['station_id']:'Station Created'})
+                else:
+                    result.append({row['station_name']:serializer.errors})
+            except Exception as e:
+                result.append({serializer.data['station_name']:str(e)})
+        return Response(result)
 """"""
 
 """All Retrieve API Functions"""
@@ -136,7 +173,6 @@ def attendantListAll(request):
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
-
 @authentication_classes([JWTAuthentication,TokenAuthentication])
 def voucherListAll(request):
         """Display all the clients from database"""
@@ -151,6 +187,24 @@ def transactionsListAll(request):
         """Display all the clients from database"""
         transactions = Transactions.objects.all()
         serializer = TransactionSerializer(transactions,many=True)
+        return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+@authentication_classes([JWTAuthentication,TokenAuthentication])
+def UserListAll(request):
+        """Display all the clients from database"""
+        users = Users.objects.all()
+        serializer = UserSerializer(users,many=True)
+        return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+@authentication_classes([JWTAuthentication,TokenAuthentication])
+def StationListAll(request):
+        """Display all the clients from database"""
+        stations = Station.objects.all()
+        serializer = StationSerializer(stations,many=True)
         return Response(serializer.data)
 """"""
 
@@ -258,6 +312,7 @@ def transaction_details(request,pk):
          transaction.delete()
          return Response({'status':'Transaction Deleted'})
     
+
 @api_view(['GET','PUT','POST'])
 @permission_classes([AllowAny])
 @authentication_classes([])
@@ -285,3 +340,53 @@ def ChatView(request):
             return Response({'status':serializer.errors})
           except Exception as e:
                return Response({'status':str(e)})
+          
+
+@api_view(['GET','PUT','DELETE'])
+@permission_classes((IsAuthenticated, ))
+@authentication_classes([JWTAuthentication,TokenAuthentication])
+def user_details(request,pk):
+    try:
+        user = Users.objects.get(email=pk)
+    except Exception as e:
+            return Response({'status':' User not found'})
+
+    if request.method=='GET':
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+    elif request.method=='PUT':
+        serializer = UserSerializer(user,data=request.data,partial=True)
+        if serializer.is_valid():
+              serializer.save()
+              return Response({'status':'Data Updated'})
+        return Response({'status':serializer.errors})
+    
+    elif request.method=='DELETE':
+         user.delete()
+         return Response({'status':'User Deleted'})
+    
+
+@api_view(['GET','PUT','DELETE'])
+@permission_classes((IsAuthenticated, ))
+@authentication_classes([JWTAuthentication,TokenAuthentication])
+def station_details(request,pk):
+    try:
+        station = Station.objects.get(station_id=pk)
+    except Exception as e:
+            return Response({'status':' Station not found'})
+
+    if request.method=='GET':
+        serializer = StationSerializer(station)
+        return Response(serializer.data)
+
+    elif request.method=='PUT':
+        serializer = StationSerializer(station,data=request.data,partial=True)
+        if serializer.is_valid():
+              serializer.save()
+              return Response({'status':'Data Updated'})
+        return Response({'status':serializer.errors})
+    
+    elif request.method=='DELETE':
+         station.delete()
+         return Response({'status':'User Deleted'})
