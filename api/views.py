@@ -60,7 +60,7 @@ def createVoucher(request):
             try:
                 serializer = VoucherSerializer(data=row)
                 if serializer.is_valid():
-                    serializer.data['last_used'] = None
+                    serializer.validated_data['last_used'] = None
                     serializer.save()
                     
                     client = ClientMaster.objects.get(client_id=row['client_id'])
