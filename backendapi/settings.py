@@ -67,7 +67,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'backendapi.urls'
 
-CORS_ALLOWED_ORIGINS=['http://localhost:3000',]
+CORS_ALLOWED_ORIGINS=['http://localhost:3000','https://master--bucolic-panda-a6ac91.netlify.app']
 
 TEMPLATES = [
     {
