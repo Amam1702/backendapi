@@ -27,7 +27,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY",get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG","False") == "True"
 
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS","127.0.0.1,localhost").split(',')+os.getenv("APP_ALLOWED",'localhost')
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS","127.0.0.1,localhost").split(',')
 
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
@@ -67,7 +67,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'backendapi.urls'
 
-CORS_ALLOWED_ORIGINS=['http://localhost:3000','https://master--bucolic-panda-a6ac91.netlify.app']
+CORS_ALLOWED_ORIGINS=['http://localhost:3000']
 
 TEMPLATES = [
     {
