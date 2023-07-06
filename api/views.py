@@ -218,8 +218,11 @@ def client_details(request,pk):
     """display all Client Details"""
     try:
         client = ClientMaster.objects.get(client_id=pk)
-    except Exception as e:
+        if client==None:
             return Response({'status':'Client ID not found'})
+             
+    except Exception as e:
+            return Response({'status':str(e)})
 
     if request.method=='GET':
         serializer = ClientSerializer(client)
@@ -243,8 +246,10 @@ def client_details(request,pk):
 def attendant_details(request,pk):
     try:
         atdt = Attendant.objects.get(employee_id=pk)
-    except Exception as e:
+        if atdt==None:
             return Response({'status':'Attendant ID not found'})
+    except Exception as e:
+            return Response({'status':str(e)})
 
     if request.method=='GET':
         serializer = AttendantSerializer(atdt)
@@ -267,8 +272,11 @@ def attendant_details(request,pk):
 def voucher_details(request,pk):
     try:
         voucher = Voucher.objects.get(voucher_id=pk)
+        if voucher==None:
+             return Response({'status':"Voucher ID not found"})
     except Exception as e:
-            return Response({'status':'Voucher ID not found'})
+            return Response({'status':str(e)})
+
 
     if request.method=='GET':
         serializer = VoucherSerializer(voucher)
@@ -296,8 +304,10 @@ def voucher_details(request,pk):
 def transaction_details(request,pk):
     try:
         transaction = Transactions.objects.get(txn_id=pk)
+        if transaction:
+            return Response({'status':'Transaction ID not found'})
     except Exception as e:
-            return Response({'status':' Transaction ID not found'})
+            return Response({'status':str(e)})
 
     if request.method=='GET':
         serializer = TransactionSerializer(transaction)
@@ -350,8 +360,10 @@ def ChatView(request):
 def user_details(request,pk):
     try:
         user = Users.objects.get(email=pk)
+        if user==None:
+            return Response({'status':'User not found'})
     except Exception as e:
-            return Response({'status':' User not found'})
+            return Response({'status':str(e)})
 
     if request.method=='GET':
         serializer = UserSerializer(user)
@@ -375,8 +387,10 @@ def user_details(request,pk):
 def station_details(request,pk):
     try:
         station = Station.objects.get(station_id=pk)
+        if station==None:
+            return Response({'status':'Station  not found'})
     except Exception as e:
-            return Response({'status':' Station not found'})
+            return Response({'status':str(e)})
 
     if request.method=='GET':
         serializer = StationSerializer(station)
