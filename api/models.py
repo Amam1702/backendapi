@@ -7,18 +7,18 @@ def user_directory_path(instance, filename):
 class Station(models.Model):
     station_id      = models.AutoField(primary_key=True)
     location        = models.CharField(max_length=100,blank=True,null=True)
-    station_name    = models.CharField(max_length=300) 
-    email           = models.EmailField(max_length=100)
-    phone           = models.CharField(max_length=100)
-    fuel_type       = models.CharField(max_length=100)
-    operated_hours  = models.CharField(max_length=100)
-    created_time    = models.DateTimeField(default=timezone.now) 
+    station_name    = models.CharField(max_length=300,blank=False) 
+    email           = models.EmailField(max_length=100,blank=False)
+    phone           = models.CharField(max_length=100,blank=False)
+    fuel_type       = models.CharField(max_length=100,blank=False)
+    operated_hours  = models.CharField(max_length=100,blank=False)
+    created_time    = models.DateTimeField(default=timezone.now,blank=True) 
 
 class Attendant(models.Model):
     atdt_id         = models.AutoField(primary_key=True)
     first_name      = models.CharField(max_length=200,blank=False)
     last_name       = models.CharField(max_length=200,blank=False)
-    date_of_birth   = models.DateField(null=True,blank=True)
+    date_of_birth   = models.DateField(null=True,blank=False)
     employee_id     = models.CharField(max_length=200,blank=False)
     location_id     = models.CharField(max_length=200,null=True,blank=True)
     password        = models.CharField(max_length=400,blank=False)
@@ -28,7 +28,7 @@ class Attendant(models.Model):
     modified_by     = models.CharField(max_length=100,null=True,blank=True)
     department      = models.CharField(max_length=100,default="NA")
     station_id      = models.ForeignKey(Station,on_delete=models.DO_NOTHING)
-    created_time    = models.DateTimeField(default=timezone.now) 
+    created_time    = models.DateTimeField(default=timezone.now,blank=True) 
 
     def __str__(self) -> str:
         return str(self.atdt_id)
@@ -42,10 +42,10 @@ class ClientMaster(models.Model):
     active_vouchers     = models.IntegerField(default=0,null=True,blank=True)
     used_vouchers       = models.IntegerField(default=0,null=True,blank=True)
     last_order_date     = models.DateField(default=None,blank=True,null=True)
-    last_order_amount   = models.IntegerField(default=0)
+    last_order_amount   = models.IntegerField(default=0,blank=True)
     created_by          = models.CharField(max_length=100,null=True,blank=True)
     modified_by         = models.CharField(max_length=100,null=True,blank=True)
-    created_time    = models.DateTimeField(default=timezone.now) 
+    created_time    = models.DateTimeField(default=timezone.now,blank=True) 
 
     def __str__(self) -> str:
         return str(self.client_id)
@@ -56,25 +56,25 @@ class Voucher(models.Model):
     balance             = models.BigIntegerField(blank=False)
     last_used           = models.DateField(blank=True,null=True,default=None)
     last_transaction_id = models.CharField(max_length=200,blank=True,null=True,default=None)
-    start_date          = models.DateField(blank=True)
-    end_date            = models.DateField(blank=True)
+    start_date          = models.DateField(blank=False)
+    end_date            = models.DateField(blank=False)
     client_id           = models.ForeignKey(ClientMaster,on_delete=models.CASCADE)
     status              = models.CharField(max_length=1,default='A')
     created_by          = models.CharField(max_length=100,null=True,blank=True)
     modified_by         = models.CharField(max_length=100,null=True,blank=True)
-    created_time    = models.DateTimeField(default=timezone.now) 
+    created_time    = models.DateTimeField(default=timezone.now,blank=True) 
 
     def __str__(self) -> str:
         return str(self.voucher_id)
 
 class Transactions(models.Model):
-    txn_date        = models.DateTimeField(blank=False,default=timezone.now)
+    txn_date        = models.DateTimeField(default=timezone.now,blank=True)
     txn_id          = models.AutoField(primary_key=True) 
-    initial_amount  = models.BigIntegerField(null=True)
-    redeem_amount   = models.BigIntegerField(null=True)
-    left_balance    = models.BigIntegerField(null=True)
-    Voucher_id      = models.ForeignKey(Voucher,on_delete=models.CASCADE)
-    id              = models.ForeignKey(Attendant,on_delete=models.CASCADE)
+    initial_amount  = models.BigIntegerField(blank=False)
+    redeem_amount   = models.BigIntegerField(blank=False)
+    left_balance    = models.BigIntegerField(null=True,blank=True)
+    Voucher_id      = models.ForeignKey(Voucher,on_delete=models.CASCADE,blank=False)
+    id              = models.ForeignKey(Attendant,on_delete=models.CASCADE,blank=False)
 
   
 
@@ -104,13 +104,13 @@ class chat(models.Model):
 
 
 class Users(models.Model):
-    email       = models.EmailField(primary_key=True)
+    email       = models.EmailField(primary_key=True,blank=False)
     name        = models.CharField(max_length=300,null=True,blank=True)
     phone       = models.CharField(max_length=30,null=True,blank=True)
     department  = models.CharField(max_length=100,null=False,blank=False)
     role        = models.CharField(max_length=100,null=False,blank=False)
     password    = models.CharField(max_length=200,null=False,blank=False)
-    created_time    = models.DateTimeField(default=timezone.now) 
+    created_time    = models.DateTimeField(default=timezone.now,blank=True) 
 
 
 

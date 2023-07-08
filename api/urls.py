@@ -22,5 +22,12 @@ urlpatterns = [
     path('transaction/<str:pk>/',views.transaction_details,name='transaction_details'),
     path('user/<str:pk>/',views.user_details,name='user_details'),
     path('station/<str:pk>/',views.station_details,name='station_details'),
-    path('chat/',views.ChatView,name='ChatView')
+    path('chat/',views.ChatView,name='ChatView'),
+    path('stationFields/',views.StationFields,name='StationFields'),
+    path('clientFields/',views.ClientFields,name='ClientFields'),
+    path('transactionFields/',views.TransactionFields,name='TransactionFields'),
+    path('attendantFields/',views.AttendantFields,name='AttendantFields'),
+    path('voucherFields/',views.VoucherFields,name='VoucherFields'),
+    path('userFields/',views.UserFields,name='UserFields')
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

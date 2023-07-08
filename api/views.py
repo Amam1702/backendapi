@@ -159,6 +159,8 @@ def createStation(request):
 @authentication_classes([JWTAuthentication,TokenAuthentication])
 def clientListAll(request):
         """Display all the clients from database"""
+        
+        
         clients = ClientMaster.objects.all()
         serializer = ClientSerializer(clients,many=True)
         return Response(serializer.data)
@@ -406,3 +408,101 @@ def station_details(request,pk):
     elif request.method=='DELETE':
          station.delete()
          return Response({'status':'User Deleted'})
+    
+
+
+"""Get Required Fields"""
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+@authentication_classes([JWTAuthentication,TokenAuthentication])
+def StationFields(request):
+    try:
+        fields = Station._meta.get_fields()
+        required_fields = []
+        for f in fields:
+                if hasattr(f,'blank') and f.blank is False:
+                    required_fields.append(f.name)
+        print(required_fields)
+        return Response(required_fields)
+    except Exception as e:
+         return Response({'status':str(e)})
+        
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+@authentication_classes([JWTAuthentication,TokenAuthentication])
+def ClientFields(request):
+    try:
+        fields = ClientMaster._meta.get_fields()
+        required_fields = []
+        for f in fields:
+                if hasattr(f,'blank') and f.blank is False:
+                    required_fields.append(f.name)
+        print(required_fields)
+        return Response(required_fields)
+    except Exception as e:
+         return Response({'status':str(e)})
+    
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+@authentication_classes([JWTAuthentication,TokenAuthentication])
+def AttendantFields(request):
+    try:
+        fields = Attendant._meta.get_fields()
+        required_fields = []
+        for f in fields:
+                if hasattr(f,'blank') and f.blank is False:
+                    required_fields.append(f.name)
+        print(required_fields)
+        return Response(required_fields)
+    except Exception as e:
+         return Response({'status':str(e)})
+    
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+@authentication_classes([JWTAuthentication,TokenAuthentication])
+def TransactionFields(request):
+    try:
+        fields = Transactions._meta.get_fields()
+        required_fields = []
+        for f in fields:
+                if hasattr(f,'blank') and f.blank is False:
+                    required_fields.append(f.name)
+        print(required_fields)
+        return Response(required_fields)
+    except Exception as e:
+         return Response({'status':str(e)})
+    
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+@authentication_classes([JWTAuthentication,TokenAuthentication])
+def VoucherFields(request):
+    try:
+        fields = Voucher._meta.get_fields()
+        required_fields = []
+        for f in fields:
+                if hasattr(f,'blank') and f.blank is False:
+                    required_fields.append(f.name)
+        print(required_fields)
+        return Response(required_fields)
+    except Exception as e:
+         return Response({'status':str(e)})
+    
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+@authentication_classes([JWTAuthentication,TokenAuthentication])
+def UserFields(request):
+    try:
+        fields = Users._meta.get_fields()
+        required_fields = []
+        for f in fields:
+                if hasattr(f,'blank') and f.blank is False:
+                    required_fields.append(f.name)
+        print(required_fields)
+        return Response(required_fields)
+    except Exception as e:
+         return Response({'status':str(e)})
