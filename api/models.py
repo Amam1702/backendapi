@@ -27,7 +27,7 @@ class Attendant(models.Model):
     created_by      = models.CharField(max_length=100,null=True,blank=True)
     modified_by     = models.CharField(max_length=100,null=True,blank=True)
     department      = models.CharField(max_length=100,default="NA")
-    station_id      = models.ForeignKey(Station,on_delete=models.DO_NOTHING)
+    station_id      = models.ForeignKey(Station,on_delete=models.DO_NOTHING,blank=True,null=True)
     created_time    = models.DateTimeField(default=timezone.now,blank=True) 
 
     def __str__(self) -> str:
